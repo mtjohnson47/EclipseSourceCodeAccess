@@ -1,4 +1,5 @@
 /* Copyright (c) 2014 K. Ernest 'iFire' Lee
+Modified by Michael Johnson-Moore
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -19,25 +20,18 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.  */
 
-#include "SensibleEditorSourceCodeAccessPrivatePCH.h"
-#include "Runtime/Core/Public/Features/IModularFeatures.h"
-#include "SensibleEditorSourceCodeAccessModule.h"
+#pragma once
 
-IMPLEMENT_MODULE( FSensibleSourceCodeAccessModule, SensibleEditorSourceCodeAccess );
+#include "EclipseSourceCodeAccessor.h"
 
-void FSensibleSourceCodeAccessModule::StartupModule()
+class FEclipseSourceCodeAccessModule : public IModuleInterface
 {
-	// Bind our source control provider to the editor
-	IModularFeatures::Get().RegisterModularFeature(TEXT("SourceCodeAccessor"), &SensibleEditorSourceCodeAccessor );
-}
+public:
+	/** IModuleInterface implementation */
+	virtual void StartupModule() override;
+	virtual void ShutdownModule() override;
+    FEclipseSourceCodeAccessor& GetAccessor();
 
-void FSensibleSourceCodeAccessModule::ShutdownModule()
-{
-	// unbind provider from editor
-	IModularFeatures::Get().UnregisterModularFeature(TEXT("SourceCodeAccessor"), &SensibleEditorSourceCodeAccessor);
-}
-
-FSensibleSourceCodeAccessor& FSensibleSourceCodeAccessModule::GetAccessor()
-{
-    return SensibleEditorSourceCodeAccessor;
-}
+private:
+    FEclipseSourceCodeAccessor EclipseSourceCodeAccessor;
+};

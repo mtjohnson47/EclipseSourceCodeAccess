@@ -1,4 +1,5 @@
 /* Copyright (c) 2014 K. Ernest 'iFire' Lee
+Modified by Michael Johnson-Moore
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -19,20 +20,22 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.  */
 
-namespace UnrealBuildTool.Rules
+#pragma once
+
+#include "ISourceCodeAccessor.h"
+
+class FEclipseSourceCodeAccessor : public ISourceCodeAccessor
 {
-	public class SensibleEditorSourceCodeAccess : ModuleRules
-	{
-                 public SensibleEditorSourceCodeAccess(TargetInfo Target)
-		 {
-		 	PrivateDependencyModuleNames.AddRange(
-                                new string[]
-				{
-					"Core",
-					"DesktopPlatform",
-					"SourceCodeAccess"
-				}
-			);
-		}
-	}
-}
+public:
+	/** ISourceCodeAccessor implementation */
+	virtual bool CanAccessSourceCode() const override;
+	virtual FName GetFName() const override;
+	virtual FText GetNameText() const override;
+	virtual FText GetDescriptionText() const override;
+	virtual bool OpenSolution() override;
+	virtual bool OpenFileAtLine(const FString& FullPath, int32 LineNumber, int32 ColumnNumber = 0) override;
+	virtual bool OpenSourceFiles(const TArray<FString>& AbsoluteSourcePaths) override;
+	virtual bool SaveAllOpenDocuments() const override;
+    virtual bool AddSourceFiles(const TArray<FString>& AbsoluteSourcePaths, const TArray<FString>& AvailableModules) override;
+	virtual void Tick(const float DeltaTime) override;
+};

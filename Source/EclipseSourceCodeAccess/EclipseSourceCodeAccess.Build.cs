@@ -1,4 +1,5 @@
 /* Copyright (c) 2014 K. Ernest 'iFire' Lee
+Modified by Michael Johnson-Moore
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -19,18 +20,20 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.  */
 
-#pragma once
-
-#include "SensibleEditorSourceCodeAccessor.h"
-
-class FSensibleSourceCodeAccessModule : public IModuleInterface
+namespace UnrealBuildTool.Rules
 {
-public:
-	/** IModuleInterface implementation */
-	virtual void StartupModule() override;
-	virtual void ShutdownModule() override;
-    FSensibleSourceCodeAccessor& GetAccessor();
-
-private:
-    FSensibleSourceCodeAccessor SensibleEditorSourceCodeAccessor;
-};
+	public class EclipseSourceCodeAccess : ModuleRules
+	{
+                 public EclipseSourceCodeAccess(TargetInfo Target)
+		 {
+		 	PrivateDependencyModuleNames.AddRange(
+                                new string[]
+				{
+					"Core",
+					"DesktopPlatform",
+					"SourceCodeAccess"
+				}
+			);
+		}
+	}
+}

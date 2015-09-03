@@ -1,12 +1,12 @@
 {
 	"FileVersion" : 3,
-	"FriendlyName" : "Sensible Editor Source Code Access",
+	"FriendlyName" : "Eclipse Source Code Access",
 	"Version" : 1,
 	"VersionName" : "1.0",
-	"CreatedBy" : "K. Ernest 'iFire' Lee",
-	"CreatedByURL" : "https://github.com/fire/SensibleEditorSourceCodeAccess.git",
-	"EngineVersion" : "4.3.0",
-	"Description" : "Allows access to source code with Sensible Editor.",
+	"CreatedBy" : "Michael Johnson-Moore",
+	"CreatedByURL" : "https://github.com/mtjohnson47/EclipseSourceCodeAccess.git",
+	"EngineVersion" : "4.9.0",
+	"Description" : "Allows access to source code with Eclipse IDE.",
 	"Category" : "Developer.Source Code Access",
 	"EnabledByDefault" : true,
 	

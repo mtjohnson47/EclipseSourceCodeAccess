@@ -1,4 +1,5 @@
  /* Copyright (c) 2014 K. Ernest 'iFire' Lee
+Modified by Michael Johnson-Moore
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -19,33 +20,33 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.  */
 
-#include "SensibleEditorSourceCodeAccessPrivatePCH.h"
-#include "SensibleEditorSourceCodeAccessor.h"
+#include "EclipseSourceCodeAccessPrivatePCH.h"
+#include "EclipseSourceCodeAccessor.h"
 #include "DesktopPlatformModule.h"
 
-#define LOCTEXT_NAMESPACE "SensibleEditorSourceCodeAccessor"
+#define LOCTEXT_NAMESPACE "EclipseSourceCodeAccessor"
 
-bool FSensibleSourceCodeAccessor::CanAccessSourceCode() const
+bool FEclipseSourceCodeAccessor::CanAccessSourceCode() const
 {
   return FPaths::FileExists(TEXT("/usr/bin/clang"));
 }
 
-FName FSensibleSourceCodeAccessor::GetFName() const
+FName FEclipseSourceCodeAccessor::GetFName() const
 {
-  return FName("SensibleEditorSourceCodeAccessor");
+  return FName("EclipseSourceCodeAccessor");
 }
 
-FText FSensibleSourceCodeAccessor::GetNameText() const 
+FText FEclipseSourceCodeAccessor::GetNameText() const 
 {
-  return LOCTEXT("SensibleEditorDisplayName", "Sensible Editor");
+  return LOCTEXT("EclipseDisplayName", "Eclipse IDE");
 }
 
-FText FSensibleSourceCodeAccessor::GetDescriptionText() const
+FText FEclipseSourceCodeAccessor::GetDescriptionText() const
 {
-  return LOCTEXT("SensibleEditorDisplayDesc", "Open source code files with Sensible Editor");
+  return LOCTEXT("EclipseDisplayDesc", "Open source code files with Eclipse IDE");
 }
 
-bool FSensibleSourceCodeAccessor::OpenSolution()
+bool FEclipseSourceCodeAccessor::OpenSolution()
 {
   FString FullPath;
   if ( FDesktopPlatformModule::Get()->GetSolutionPath(FullPath) )
@@ -56,7 +57,7 @@ bool FSensibleSourceCodeAccessor::OpenSolution()
         // Add this to handle spaces in path names.
         const FString NewFullPath = FString::Printf(TEXT("\"%s\""), *FullPath);
 
-        FString Editor = FString(TEXT("/usr/bin/sensible-editor"));
+        FString Editor = FString(TEXT("/usr/bin/eclipse"));
         if(FLinuxPlatformProcess::CreateProc(*Editor,
                                              *NewFullPath,
                                              true,
@@ -74,9 +75,9 @@ bool FSensibleSourceCodeAccessor::OpenSolution()
   return false;
 }
 
-bool FSensibleSourceCodeAccessor::OpenFileAtLine(const FString& FullPath, int32 LineNumber, int32 ColumnNumber)
+bool FEclipseSourceCodeAccessor::OpenFileAtLine(const FString& FullPath, int32 LineNumber, int32 ColumnNumber)
 {
-    FString Editor = FString(TEXT("/usr/bin/sensible-editor"));
+    FString Editor = FString(TEXT("/usr/bin/eclipse"));
 
     // Add this to handle spaces in path names.
     const FString NewFullPath = FString::Printf(TEXT("\"%s+%d\""), *FullPath, LineNumber);
@@ -97,11 +98,11 @@ bool FSensibleSourceCodeAccessor::OpenFileAtLine(const FString& FullPath, int32 
   return false;
 }
 
-bool FSensibleSourceCodeAccessor::OpenSourceFiles(const TArray<FString>& AbsoluteSourcePaths) 
+bool FEclipseSourceCodeAccessor::OpenSourceFiles(const TArray<FString>& AbsoluteSourcePaths) 
 {
   for ( const FString& SourcePath : AbsoluteSourcePaths ) 
   {
-    FString Editor = FString(TEXT("/usr/bin/sensible-editor"));
+    FString Editor = FString(TEXT("/usr/bin/eclipse"));
 
     // Add this to handle spaces in path names.
     const FString NewSourcePath = FString::Printf(TEXT("\"%s\""), *SourcePath);
@@ -122,17 +123,17 @@ bool FSensibleSourceCodeAccessor::OpenSourceFiles(const TArray<FString>& Absolut
   return true;
 }
 
-bool FSensibleSourceCodeAccessor::AddSourceFiles(const TArray<FString>& AbsoluteSourcePaths, const TArray<FString>& AvailableModules)
+bool FEclipseSourceCodeAccessor::AddSourceFiles(const TArray<FString>& AbsoluteSourcePaths, const TArray<FString>& AvailableModules)
 {
     return false;
 }
 
-bool FSensibleSourceCodeAccessor::SaveAllOpenDocuments() const
+bool FEclipseSourceCodeAccessor::SaveAllOpenDocuments() const
 {
   return false;
 }
 
-void FSensibleSourceCodeAccessor::Tick(const float DeltaTime) 
+void FEclipseSourceCodeAccessor::Tick(const float DeltaTime) 
 {
 
 }
